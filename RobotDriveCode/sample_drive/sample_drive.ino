@@ -49,10 +49,10 @@ void run_path(int direction[], double distance[], int steps) {
         go_back(SPEED);
         break;
       case LEFT:
-        left_shift(SPEED, SPEED, SPEED, SPEED);
+        left_turn(SPEED); //, SPEED, SPEED, SPEED);
         break;
       case RIGHT:
-        right_shift(SPEED, SPEED, SPEED, SPEED);
+        right_turn(SPEED); //, SPEED, SPEED, SPEED);
         break;
       default:
         // error
@@ -69,7 +69,7 @@ void go_advance(int speed){
    RL_fwd(speed);
    RR_fwd(speed);
    FR_fwd(speed);
-   FL_fwd(speed); 
+   FL_fwd(90); 
 }
 void go_back(int speed){
    RL_bck(speed);
@@ -89,49 +89,18 @@ void left_shift(int speed_fl_bck,int speed_rl_fwd ,int speed_rr_bck,int speed_fr
    RR_bck(speed_rr_bck);
    FR_fwd(speed_fr_fwd);
 }
-
-void left_turn(int speed){
-   RL_bck(0);
-   RR_fwd(speed);
-   FR_fwd(speed);
-   FL_bck(0); 
-}
 void right_turn(int speed){
- //  RL_fwd(speed);
-//   RR_bck(0);
- //  FR_bck(0);
- //  FL_fwd(speed); 
-
-   RL_fwd(speed);
-   RR_fwd(0);
-   FR_fwd(0);
-   FL_fwd(speed); 
+  FL_fwd(speed);
+  RL_fwd(speed);
+  FR_bck(speed);
+  RR_bck(speed);
 }
-void left_back(int speed){
-   RL_fwd(0);
-   RR_bck(speed);
-   FR_bck(speed);
-   FL_fwd(0); 
+void left_turn(int speed){
+  FR_fwd(speed);
+  RR_fwd(speed);
+  FL_bck(speed);
+  RL_bck(speed);
 }
-void right_back(int speed){
-   RL_bck(speed);
-   RR_fwd(0);
-   FR_fwd(0);
-   FL_bck(speed); 
-}
-void clockwise(int speed){
-   RL_fwd(speed);
-   RR_bck(speed);
-   FR_bck(speed);
-   FL_fwd(speed); 
-}
-void countclockwise(int speed){
-   RL_bck(speed);
-   RR_fwd(speed);
-   FR_fwd(speed);
-   FL_bck(speed); 
-}
-
 
 void FR_fwd(int speed)  //front-right wheel forward turn
 {
@@ -191,7 +160,6 @@ void stop_Stop()    //Stop
   analogWrite(speedPinR,0);
 }
 
-
 //Pins initialize
 void init_GPIO()
 {
@@ -217,9 +185,9 @@ void setup()
 {
   init_GPIO();
 
-  int direction[4] = {0, 1, 2, 3};
-  double distance[4] = {20.0, 10.0, 10.0, 10.0};
-  int steps = 4;
+  int direction[5] = {0, 2, 0, 3, 0};
+  double distance[5] = {100.0, 5.0, 50.0, 5.0, 50.0};
+  int steps = 1;
   run_path(direction, distance, steps);
 }
 
