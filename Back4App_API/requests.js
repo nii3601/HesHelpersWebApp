@@ -64,6 +64,36 @@ Parse.Cloud.define("getBookList", async (request) => {
   return await query.find();
 });
 
+Parse.Cloud.define("createBook", async (request) => {
+  const title = request.params.title;
+  const ISBN = request.params.ISBN;
+  const author = request.params.author;
+  const floor = request.params.floor;
+  const color = request.params.color;
+  const location = request.params.location;
+
+
+  const book = new Parse.Object('Book');
+  let query = new Parse.Query("Map");
+  query.equalTo('Floor', floor);
+  const map = await query.first();
+
+  book.set('Title', title);
+  book.set('ISBN', ISBN);
+  book.set('Author', author);
+  book.set('Map', map);
+  book.set('Color', color);
+  book.set('Location', location);
+
+
+  try {
+      return await book.save();
+    } catch (error) {
+      console.log('Book create - Error - ' + error.code + ' ' + error.message);
+      return error
+    }
+});
+
 /* Parse Server 2.x
 * Parse.Cloud.define("hello", function(request, response){
 * 	response.success("Hello world!");
