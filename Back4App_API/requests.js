@@ -52,6 +52,18 @@ Parse.Cloud.define("FetchBotDirections", async (request) => {
   }
 });
 
+Parse.Cloud.define("getBookList", async (request) => {
+  let requestParams = request.params;
+  let title = requestParams.title;
+  let query = new Parse.Query("Book");
+  if (isNaN(title)) {
+    query.contains("title",title);
+  } else {
+    query.contains("ISBN",title);
+  }
+  return await query.find();
+});
+
 /* Parse Server 2.x
 * Parse.Cloud.define("hello", function(request, response){
 * 	response.success("Hello world!");
