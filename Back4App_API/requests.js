@@ -13,7 +13,7 @@ Parse.Cloud.define("CheckBotAssignment", async (request) => {
   const bot = await query.first();
   if (bot) {
     const botDestination = bot.get('Destination');
-    if( botDestination !== null) {
+    if( botDestination !== undefined) {
       return {Assigned: true, Destination: botDestination};
     }
     else {
