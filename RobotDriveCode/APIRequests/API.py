@@ -1,9 +1,12 @@
+import requests
 
+BASE_URL = "https://parseapi.back4app.com/classes/"
 
 def checkAssignment(robotID=None):
     '''
         CHECKS IF ROBOT HAS BEEN ASSIGNED
     '''
+
     pass
 
 def getBookInfo(bookID=None):
