@@ -9,6 +9,10 @@ function Home() {
         setResults(!showResults);
     }
 
+    function clickResult(){
+        console.log("clicked")
+    }
+
     return (
         <div className={`flex flex-col items-center bg-blue-400 pt-5 pb-5 ${!showResults ? "h-screen" : ""}`}>
             <p className="text-3xl font-bold mb-3 text-white uppercase">Hesburg Helper</p>
@@ -29,7 +33,9 @@ function Home() {
                     <>
                         <p className="text-xl text-white font-bold mt-10 border-t-2 border-white">Search Results</p>
                         <div className="mt-5 w-3/4 space-y-10">
-                            <BookTile />
+                            <BookTile
+                            onClick={clickResult}
+                            />
                             <BookTile />
                             <BookTile />
                             <BookTile />
