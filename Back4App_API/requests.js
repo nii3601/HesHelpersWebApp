@@ -52,26 +52,24 @@ Parse.Cloud.define("FetchBotDirections", async (request) => {
   }
 });
 
-Parse.Cloud.define("getBookList", async (request) => {
+Parse.Cloud.define("GetBook", async (request) => {
   let requestParams = request.params;
-  let title = requestParams.title;
+  let id = requestParams.id;
   let query = new Parse.Query("Book");
-  if (isNaN(title)) {
-    query.contains("title",title);
-  } else {
-    query.contains("ISBN",title);
+  query.equalTo('objectId',id);
+  const book  = await query.find();
+  if (book) {
+    return book;
   }
-  return await query.find();
 });
 
-Parse.Cloud.define("createBook", async (request) => {
+Parse.Cloud.define("CreateBook", async (request) => {
   const title = request.params.title;
   const ISBN = request.params.ISBN;
   const author = request.params.author;
   const floor = request.params.floor;
   const color = request.params.color;
   const location = request.params.location;
-
 
   const book = new Parse.Object('Book');
   let query = new Parse.Query("Map");
@@ -84,7 +82,6 @@ Parse.Cloud.define("createBook", async (request) => {
   book.set('Map', map);
   book.set('Color', color);
   book.set('Location', location);
-
 
   try {
       return await book.save();
