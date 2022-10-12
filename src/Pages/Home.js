@@ -35,7 +35,7 @@ function Home() {
 
     return (
         <div className={`flex flex-col items-center bg-blue-400 pt-5 pb-5 min-h-screen h-auto`}>
-            <p className="text-3xl font-bold mb-3 text-white uppercase">Hesburg Helper</p>
+            <p className="text-3xl font-bold mb-3 text-white uppercase">Hesburgh Helper</p>
             <p className="text-lg font-bold mb-3 text-white">Search for a book</p>
             <input
                 className="w-72 text-center rounded p-3 border border-transparent mb-2 text-lg"
