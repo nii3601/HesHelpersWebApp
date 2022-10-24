@@ -54,13 +54,55 @@ Parse.Cloud.define("FetchBotDirections", async (request) => {
 
 Parse.Cloud.define("GetBook", async (request) => {
   let requestParams = request.params;
-  let id = requestParams.id;
+  let id = requestParams.objectId;
   let query = new Parse.Query("Book");
   query.equalTo('objectId',id);
   const book  = await query.find();
   if (book) {
     return book;
   }
+});
+
+Parse.Cloud.define("SetBook", async (request) => {
+  let requestParams = request.params;
+  let id = requestParams.objectId;
+  let query = new Parse.Query("Book");
+  query.equalTo('objectId',id);
+  let query2 = new Parse.Query("Bot");
+  query2.equalTo('Destination', undefined);
+  let botSet = new Parse.Object("Bot");
+  const bot = await query2.first();
+  const book  = await query.find();
+  if (book && bot) {
+    botSet.set("objectId", bot.id);
+    botSet.set("ID", bot.get("ID"));
+    botSet.set('Destination', book[0]);
+    let response = await botSet.save();
+    return true;
+  } else if (book == undefined) {
+    return {response: false, reason: "Book not found"};
+  } else {
+    return {response: false, reason: "No bot available", book: book};
+  }
+});
+
+Parse.Cloud.define("ResetBot", async (request) => {
+  let requestParams = request.params;
+  let botName = requestParams.botName;
+  let botReset = new Parse.Object("Bot");
+  let query = new Parse.Query("Bot");
+  query.equalTo('ID', botName);
+  const bot = await query.first();
+  if (bot) {
+    botReset.set("objectId", bot.id);
+    botReset.set("ID", bot.get("ID"));
+    botReset.unset("Destination");
+    let res = await botReset.save();
+    return {res: true};
+  } else {
+    return false;
+  }
+    
 });
 
 Parse.Cloud.define("CreateBook", async (request) => {
