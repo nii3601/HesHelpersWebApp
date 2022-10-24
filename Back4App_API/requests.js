@@ -98,7 +98,7 @@ Parse.Cloud.define("ResetBot", async (request) => {
     botReset.set("ID", bot.get("ID"));
     botReset.unset("Destination");
     let res = await botReset.save();
-    return {res: true};
+    return true;
   } else {
     return false;
   }
