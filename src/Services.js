@@ -18,3 +18,35 @@ export const searchBook = async(query) =>{
 
     return result;
 }
+
+export const searchBookID = async(query) =>{
+  // set up parse queries
+  let parseQuery_bookId = new Parse.Query('Book');
+  parseQuery_bookId.equalTo('objectId',query);
+  let finalQuery = Parse.Query.or(parseQuery_bookId);
+  // execute queries
+  let result = await finalQuery.first();
+  return result;
+}
+
+export const setBook = async(bookId) =>{
+  let id = bookId;
+  let query = new Parse.Query("Book");
+  query.equalTo('objectId',id);
+  let query2 = new Parse.Query("Bot");
+  query2.equalTo('Destination', undefined);
+  let botSet = new Parse.Object("Bot");
+  const bot = await query2.first();
+  const book  = await query.first();
+  if (book && bot) {
+    botSet.set("objectId", bot.id);
+    botSet.set("ID", bot.get("ID"));
+    botSet.set('Destination', book);
+    let response = await botSet.save();
+    return {response: response};
+  } else if (book === undefined) {
+    return {response: false, reason: "Book not found"};
+  } else {
+    return {response: false, reason: "No bot available", book: book};
+  }
+}

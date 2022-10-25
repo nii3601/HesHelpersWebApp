@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import BookTile from "../Components/BookTile";
-import { searchBook } from '../Services';
+import { searchBook, searchBookID } from '../Services';
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-
+  
     const [query, setquery] = useState('');
     const [results, setResults] = useState(null);
-
+    let navigate = useNavigate(); 
     function onSearch() {
         console.log({ query });
         if (query !== '') {
@@ -19,8 +20,13 @@ function Home() {
         }
     }
 
-    function clickResult() {
-        console.log("clicked")
+    async function clickResult(item) {
+        console.log("clicked");
+        var book =  await searchBookID(item.id).then((result)=>{
+          return result;
+        });
+        console.log(book);
+        navigate("/BookInfo", {state:{book}});
     }
 
     function queryChange(e) {
@@ -59,8 +65,9 @@ function Home() {
                                 results.map((item, index) => {
                                     return <BookTile
                                         key={index} 
-                                        onClick={clickResult}
+                                        onClick={() => clickResult(item)}
                                         item={item}
+                                        id={item.id}
                                         />
                                 })
                             }

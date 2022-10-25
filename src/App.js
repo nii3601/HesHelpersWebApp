@@ -6,6 +6,7 @@ import {
 import Home from './Pages/Home.js';
 import Assigned from "./Pages/Assigned.js";
 import Parse from "parse";
+import BookInfo from "./Pages/BookInfo.js";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
     <Routes>
       <Route index element={<Home />}/>
       <Route path="/Assigned" element={<Assigned />} />
+      <Route path="/BookInfo" element={<BookInfo />} />
       <Route path="*" element={<Home />} />
     </Routes>
   </BrowserRouter>
