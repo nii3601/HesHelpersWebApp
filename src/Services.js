@@ -43,7 +43,7 @@ export const setBook = async(bookId) =>{
     botSet.set("ID", bot.get("ID"));
     botSet.set('Destination', book);
     let response = await botSet.save();
-    return {response: response};
+    return {response: true, object: response};
   } else if (book === undefined) {
     return {response: false, reason: "Book not found"};
   } else {

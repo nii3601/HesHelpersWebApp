@@ -26,7 +26,7 @@ function Home() {
           return result;
         });
         console.log(book);
-        navigate("/BookInfo", {state:{book}});
+        navigate(`/BookInfo/${item.id}`);
     }
 
     function queryChange(e) {

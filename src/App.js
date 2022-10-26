@@ -21,7 +21,7 @@ function App() {
     <Routes>
       <Route index element={<Home />}/>
       <Route path="/Assigned" element={<Assigned />} />
-      <Route path="/BookInfo" element={<BookInfo />} />
+      <Route path="/BookInfo/:bookID" element={<BookInfo />} />
       <Route path="*" element={<Home />} />
     </Routes>
   </BrowserRouter>
