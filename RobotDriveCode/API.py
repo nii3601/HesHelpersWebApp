@@ -50,7 +50,6 @@ def getBookInfo(bookID=None):
     return data['result'][0]
 
 
-print(checkAssignment('Bob'))
 
 def resetBot(botName=None):
     '''
