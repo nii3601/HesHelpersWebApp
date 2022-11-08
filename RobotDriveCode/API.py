@@ -1,11 +1,13 @@
-import requests
+import http.client
+import json
 
-BASE_URL = "https://parseapi.back4app.com/functions/"
-HEADERS = {
-    'X-Parse-Application-id': 'v840lhtRewsAyjbP5uC8DUgZ7lT1x5dwXdtbTJQs',
-    'X-Parse-REST-API-Key' : 'RCGvPiJOSQ6SWucyiLu0jzgGJpJKr1zeKn57bLtq',
-    'Content-type':'application/json',   
-}
+conn = http.client.HTTPSConnection("parseapi.back4app.com")
+payload = ''
+headers = {
+      'X-Parse-Application-id': 'v840lhtRewsAyjbP5uC8DUgZ7lT1x5dwXdtbTJQs',
+      'X-Parse-REST-API-Key': 'RCGvPiJOSQ6SWucyiLu0jzgGJpJKr1zeKn57bLtq',
+      'Content-type': 'application/json'
+    }
 
 def checkAssignment(robotID=None):
     '''
@@ -17,18 +19,13 @@ def checkAssignment(robotID=None):
 
     function = "CheckBotAssignment" # define function
 
-    result = requests.post(
-        url=BASE_URL+function,
-        params={
-            'botName':robotID
-            },
-        headers=HEADERS
-    )
-
-    data = result.json()
+    conn.request("POST", "/functions/CheckBotAssignment?botName="+robotID, payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    data = json.loads(data)
 
     if(not data['result']["Assigned"]):
-        return None
+         return None
     
     return getBookInfo(data['result']['Destination']['objectId'])
 
@@ -42,15 +39,10 @@ def getBookInfo(bookID=None):
 
     function = "GetBook" # define function
 
-    result = requests.post(
-        url=BASE_URL+function,
-        params={
-            'objectId':bookID
-            },
-        headers=HEADERS
-    )
-
-    data = result.json()
+    conn.request("POST", "/functions/GetBook?objectId="+bookID, payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    data = json.loads(data)
 
     if(len(data) == 0):
         return None
@@ -59,3 +51,23 @@ def getBookInfo(bookID=None):
 
 
 print(checkAssignment('Bob'))
+
+def resetBot(botName=None):
+    '''
+        RESETS ROBOT STATUS
+    '''
+    if(botName == None):
+        return None
+
+    function = "ResetBot" # define function
+
+    conn.request("POST", "/functions/ResetBot?botName="+botName, payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    data = json.loads(data)
+
+    if(not data['result']):
+        return None
+    
+    return data['result']
+
