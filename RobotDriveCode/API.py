@@ -1,5 +1,3 @@
-# import http.client
-# import httplib
 import json
 import os
 
@@ -7,16 +5,10 @@ import os
 # conn = httplib.HTTPSConnection("parseapi.back4app.com")
 payload = ''
 headers = {
-      'X-Parse-Application-id': 'v840lhtRewsAyjbP5uC8DUgZ7lT1x5dwXdtbTJQs',
-      'X-Parse-REST-API-Key': 'RCGvPiJOSQ6SWucyiLu0jzgGJpJKr1zeKn57bLtq',
-      'Content-type': 'application/json'
+    'X-Parse-Application-id': 'v840lhtRewsAyjbP5uC8DUgZ7lT1x5dwXdtbTJQs',
+    'X-Parse-REST-API-Key': 'RCGvPiJOSQ6SWucyiLu0jzgGJpJKr1zeKn57bLtq',
+    'Content-type': 'application/json'
     }
-
-
-def test(robotID):
-    stream = os.popen('sh test.sh ' + str(robotID) )
-    print(stream.read())
-
 
 
 def checkAssignment(robotID=None):
