@@ -66,4 +66,4 @@ def resetBot(botName=None):
 
     return data['result']
 
-print(checkAssignment("Bob"))
+# print(checkAssignment("Bob"))
