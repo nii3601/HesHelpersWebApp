@@ -14,76 +14,64 @@ headers = {
 
 
 def test(robotID):
-    stream = os.popen('sh test.sh ' + robotID)
+    stream = os.popen('sh test.sh ' + str(robotID) )
     print(stream.read())
 
-test("Bob")
 
-# def checkAssignment(robotID=None):
-#     '''
-#         CHECKS IF ROBOT HAS BEEN ASSIGNED
-#         RETURNS NONE OR BOOK ID
-#     '''
 
-#     if(robotID == None):
-#         return None
+def checkAssignment(robotID=None):
+    '''
+        CHECKS IF ROBOT HAS BEEN ASSIGNED
+        RETURNS NONE OR BOOK ID
+    '''
 
-#     function = "CheckBotAssignment" # define function
+    if(robotID == None):
+        return None
 
-#     conn.request("POST", "/functions/CheckBotAssignment?botName="+robotID, payload, headers)
-#     res = conn.getresponse()
-#     data = res.read()
-#     data = json.loads(data)
+    stream = os.popen('sh test.sh ' + str("https://parseapi.back4app.com/functions/CheckBotAssignment?botName="+robotID) )
+    output = stream.read()
 
-#     conn.close()
+    data = json.loads(output)
 
-#     if(not data['result']["Assigned"]):
-#          return None
+    if(not data['result']["Assigned"]):
+        return None
     
-#     return getBookInfo(data['result']['Destination']['objectId'])
+    return getBookInfo(data['result']['Destination']['objectId'])
 
 
-# def getBookInfo(bookID=None):
-#     '''
-#         CHECK BOOK INFORMATION FROM DATABASE GIVEN BOOK ID
-#     '''
-#     if(bookID == None):
-#         return None
+def getBookInfo(bookID=None):
+    '''
+        CHECK BOOK INFORMATION FROM DATABASE GIVEN BOOK ID
+    '''
+    if(bookID == None):
+        return None
 
-#     function = "GetBook" # define function
+    stream = os.popen('sh test.sh ' + str("https://parseapi.back4app.com/functions/GetBook?objectId="+bookID) )
+    output = stream.read()
 
-#     conn.request("POST", "/functions/GetBook?objectId="+bookID, payload, headers)
-#     res = conn.getresponse()
-#     data = res.read()
-#     data = json.loads(data)
+    data = json.loads(output)
 
-#     if(len(data) == 0):
-#         return None
-
-#     conn.close()
+    if(len(data) == 0):
+        return None
     
-#     return data['result'][0]
+    return data['result'][0]
 
 
 
-# def resetBot(botName=None):
-#     '''
-#         RESETS ROBOT STATUS
-#     '''
-#     if(botName == None):
-#         return None
+def resetBot(botName=None):
+    '''
+        RESETS ROBOT STATUS
+    '''
+    if(botName == None):
+        return None
 
-#     function = "ResetBot" # define function
+    stream = os.popen('sh test.sh ' + str("https://parseapi.back4app.com/functions/ResetBot?botName="+botName) )
+    output = stream.read()
+    data = json.loads(output)
 
-#     conn.request("POST", "/functions/ResetBot?botName="+botName, payload, headers)
-#     res = conn.getresponse()
-#     data = res.read()
-#     data = json.loads(data)
+    if(not data['result']):
+        return None
 
-#     if(not data['result']):
-#         return None
+    return data['result']
 
-#     conn.close()
-    
-#     return data['result']
-
+print(checkAssignment("Bob"))
