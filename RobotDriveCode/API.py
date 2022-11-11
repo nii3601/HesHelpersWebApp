@@ -1,7 +1,7 @@
 # import http.client
 # import httplib
 import json
-import urllib2
+import os
 
 
 # conn = httplib.HTTPSConnection("parseapi.back4app.com")
@@ -13,12 +13,11 @@ headers = {
     }
 
 
-def test():
-    request = urllib2.Request("https://parseapi.back4app.com/functions/CheckBotAssignment?botName=Bob", headers=headers)
-    response = urllib2.urlopen(request).read()
-    print(response)
+def test(robotID):
+    stream = os.popen('sh test.sh ' + robotID)
+    print(stream.read())
 
-test()
+test("Bob")
 
 # def checkAssignment(robotID=None):
 #     '''
