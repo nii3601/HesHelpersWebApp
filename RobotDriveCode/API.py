@@ -1,7 +1,8 @@
-import http.client
+# import http.client
+import httplib
 import json
 
-conn = http.client.HTTPSConnection("parseapi.back4app.com")
+conn = httplib.HTTPSConnection("parseapi.back4app.com")
 payload = ''
 headers = {
       'X-Parse-Application-id': 'v840lhtRewsAyjbP5uC8DUgZ7lT1x5dwXdtbTJQs',
@@ -23,6 +24,8 @@ def checkAssignment(robotID=None):
     res = conn.getresponse()
     data = res.read()
     data = json.loads(data)
+
+    conn.close()
 
     if(not data['result']["Assigned"]):
          return None
@@ -46,6 +49,8 @@ def getBookInfo(bookID=None):
 
     if(len(data) == 0):
         return None
+
+    conn.close()
     
     return data['result'][0]
 
@@ -67,6 +72,8 @@ def resetBot(botName=None):
 
     if(not data['result']):
         return None
+
+    conn.close()
     
     return data['result']
 
