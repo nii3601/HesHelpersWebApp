@@ -62,8 +62,8 @@ class GoToPose():
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('nav_test', anonymous=False)
-        navigator = GoToPose()
+        #rospy.init_node('nav_test', anonymous=False)
+        #navigator = GoToPose()
         # Incorportate API Calls here
         bookData = checkAssignment('Bob')
         while(bookData == None):
