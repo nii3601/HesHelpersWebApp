@@ -72,14 +72,18 @@ if __name__ == '__main__':
             time.sleep(500)
             bookData = checkAssignment('Bob')
         
-        # TODO: get the position out of the book data
-
-        position = {'x': 3, 'y' : -1.5}
+        # get position of book from bookData
+        locationstr = bookData['Location']
+        x, y = locationstr.split(",")
+        xloc = float(x[1:])
+        yloc = float(y[0:len(y)-1])
+        print("x: " + str(xloc) + " y: " + str(yloc))
+        position = {'x': xloc, 'y' : yloc}
         quaternion = {'r1' : 0.000, 'r2' : 0.000, 'r3' : 1.000, 'r4' : 0.000}
 
         rospy.loginfo("Go to (%s, %s) pose", position['x'], position['y'])
-        # success = True
-        success = navigator.goto(position, quaternion)
+        success = True
+        # success = navigator.goto(position, quaternion)
 
         if success:
             rospy.loginfo("Hooray, reached the desired pose")
