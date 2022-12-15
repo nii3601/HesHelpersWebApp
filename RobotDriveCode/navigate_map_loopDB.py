@@ -9,7 +9,7 @@ import actionlib
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Pose, Point, Quaternion
 import time
-from API import *
+from APIDB import *
 
 class GoToPose():
     def __init__(self):
