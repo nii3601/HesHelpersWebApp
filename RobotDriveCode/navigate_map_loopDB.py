@@ -71,7 +71,7 @@ if __name__ == '__main__':
             while(bookData == None):
                 #rospy.loginfo("Waiting for book assignment")
                 print("Waiting for book assignment")
-                time.sleep(500)
+                time.sleep(5)
                 bookData = checkAssignment('Bill')
 		    
             # get position of book from bookData
